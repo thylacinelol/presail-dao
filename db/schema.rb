@@ -12,10 +12,13 @@
 
 ActiveRecord::Schema.define(version: 2022_02_03_125052) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "proposals", force: :cascade do |t|
     t.string "title", null: false
     t.text "description"
-    t.integer "author_id"
+    t.bigint "author_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["author_id"], name: "index_proposals_on_author_id"
@@ -29,8 +32,8 @@ ActiveRecord::Schema.define(version: 2022_02_03_125052) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "proposal_id"
+    t.bigint "user_id"
+    t.bigint "proposal_id"
     t.boolean "supports"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

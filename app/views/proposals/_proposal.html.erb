@@ -1,0 +1,24 @@
+<li class="px-4 py-4 sm:px-6 bg-white shadow overflow-hidden sm:rounded-md my-3">
+  <h2 class="font-extrabold text-lg underline decoration-indigo-400 decoration-wavy"><%= proposal.title %></h2>
+
+  <div class="flex flex-col">
+    <p class="py-3">
+      <%= proposal.description %>
+    </p>
+    <div class="flex w-100 flex py-2 justify-between">
+      <div class="flex w-50 justify-between">
+        <%= button_to 'Yes',
+                      proposal_votes_path(proposal, supports: true),
+                      method: :post,
+                      class:  "#{supported_by_user?(proposal, current_user) ? 'bg-green-200' : 'bg-white-200'} items-center mx-2 px-4 py-2 border border-green-300 shadow-sm text-sm font-medium rounded-md text-gray-700 hover:bg-green-50 focus:outline-none"
+        %>
+
+        <%= button_to 'No',
+                      proposal_votes_path(proposal, supports: false),
+                      method: :post,
+                      class:  "#{not_supported_by_user?(proposal, current_user) ? 'bg-red-200' : 'bg-white-200'} items-center px-4 py-2 border border-red-300 shadow-sm text-sm font-medium rounded-md text-gray-700 hover:bg-red-50 focus:outline-none" %>
+      </div>
+      <p class="text-gray-300 w-50 flex justify-end"><%= percentage_in_favor_of(proposal) %>% in favor</p>
+    </div>
+  </div>
+</li>

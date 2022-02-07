@@ -4,4 +4,4 @@ portfolio_manager = tomas.proposals.create!(title: 'Portfolio manager', descript
 tomas.proposals.create!(title: 'Tax reporting tool', description: 'A tool that exports all the data I need for my tax returns')
 tomas.proposals.create!(title: 'Distribution calendar', description: 'A calendar that shows me when I can expect to see my distributions')
 
-tomas.votes.create!(proposal: portfolio_manager)
+tomas.votes.create!(proposal: portfolio_manager, supports: true)
