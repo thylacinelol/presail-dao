@@ -13,10 +13,24 @@ class ProposalsController < ApplicationController
   end
 
   def index
-    @proposals = Proposal.all.sort_by { |proposal| -proposal.votes.where(supports: true).count }
+    # Might want later to move to a Query object
+    @proposals = proposals_query
   end
 
   private
+
+  def proposals_query
+    Proposal.left_outer_joins(:votes)
+            .select(
+              <<-SQL.squish
+                proposals.*,
+                COUNT(votes.id) as total_vote_count,
+                COUNT(votes.id) filter (where supports = true) as supported_vote_count
+              SQL
+            )
+            .group('proposals.id')
+            .order(supported_vote_count: :desc)
+  end
 
   def proposal_params
     params.require(:proposal).permit(:title, :description)
